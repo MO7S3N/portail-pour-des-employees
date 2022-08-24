@@ -1,0 +1,119 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consultants{% endblock %}
+
+{% block body %}
+    <div class="content-wrapper">
+        <!-- Content -->
+        <div class="container-xxl flex-grow-1 container-p-y">
+            <!-- Content types -->
+            <h5 class="pb-1 mb-4">View Profile</h5>
+
+            <div class="row mb-5">
+                <div class="col-lg-4">
+                    <div class="card">
+                        <img class="card-img-top"  src="{{ asset('../assets/img/admin/' ~ admin.image)}} ">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ admin.grade }}</h5>
+                            <div class="divider">
+                                <div class="divider-text"></div>
+                            </div>
+                            <p class="card-text text-dark"> references : {{ countref }} </p>
+                            <p class="card-text text-dark">Years of experience : {{ admin.anneeexperience }} </p>
+                            <div class="divider">
+                                <div class="divider-text"></div>
+                            </div>
+                            <p class="card-text">Entreprise : {{ admin.entreprise }}</p>
+                            <div class="divider">
+                                <div class="divider-text"></div>
+                            </div>
+                        </div>
+                        <a href="{{ path('modifier_consultans' , {"id" : admin.id}) }}" class="btn btn-secondary">Edit Profile</a>
+                        <br>
+                        <a href="{{ path('assignreference' , {'id' : admin.id}) }}" class="btn btn-warning">Assign Reference</a>
+                        <br>
+                        <a href="{{ path('download_consultants' , { 'id' : admin.id }) }}" class="btn btn-danger">Export cv</a>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="card-title">
+                                <div class="row mb-5">
+                                    <div class="col-lg-10">
+                                        <h1 class='bx bx-briefcase-alt' style="font-size: 50px">Professional Experience</h1>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <a href="{{ path('ajouter_expprofessionel', { "id" : admin.id}) }}"><i class='bx bxs-zoom-in'></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% for expro in expro  %}
+                                <div class="card-text">
+                                    <p class="card-text"><i class="bx bx-group"></i>entreprise : {{ expro.nomentreprise}}</p>
+                                    <p class="card-text"><i class="bx bx-time"></i>date debut : {{ expro.datedebut | date('Y-m-d')}}</p>
+                                    <p class="card-text"><i class="bx bx-time"></i>date fin :  {{ expro.datefin | date('Y-m-d')}}</p>
+                                    <p class="card-text"><i class="bx bx-world"></i>Lieu : {{ expro.lieu}}</p>
+                                </div>
+                                <div class="divider">
+                                    <div class="divider-text"></div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="card-title">
+                                <div class="row mb-5">
+                                    <div class="col-lg-10">
+                                        <h1 class='bx bx-briefcase-alt' style="font-size: 50px">Professional Academique</h1>
+                                    </div>
+                                    <div class="col-lg-2">
+                                        <a href="{{ path('ajouter_expacademique' , {"id" : admin.id }) }}"><i class='bx bxs-zoom-in'></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            {% for expac in expac  %}
+                                <div class="card-text">
+                                    <p class="card-text"><i class="bx bx-group"></i>etablissement : {{ expac.etablissement}}</p>
+                                    <p class="card-text"><i class="bx bx-time"></i>date debut : {{ expac.datedebut | date('Y-m-d')}}</p>
+                                    <p class="card-text"><i class="bx bx-time"></i>date fin :  {{ expac.datefin | date('Y-m-d')}}</p>
+                                </div>
+                                <div class="divider">
+                                    <div class="divider-text"></div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="card mb-4">
+                        <div class="card-body">
+                            <div class="card-title">
+                                <h1 class='bx bx-briefcase-alt' style="font-size: 50px">At Ey Reference</h1>
+                            </div>
+                            {% for ref in admin.getReference  %}
+                                <div class="card-text">
+                                    <div class="row mb-5">
+                                        <div class="col-lg-8">
+                                            <p class="card-text"><i class="bx bx-group"></i>titre : {{ ref.titre}}</p>
+                                            <p class="card-text"><i class="bx bx-group"></i>description : {{ ref.description}}</p>
+                                            <p class="card-text"><i class="bx bx-time"></i>date debut : {{ ref.datedebut | date('Y-m-d')}}</p>
+                                            <p class="card-text"><i class="bx bx-time"></i>date fin :  {{ ref.datefin | date('Y-m-d')}}</p>
+                                        </div>
+                                        <div class="col-lg-4">
+                                            <a href="{{ path('consultans_references' , {'id' : ref.id}) }}"><i class='bx bxs-zoom-in'></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="divider">
+                                    <div class="divider-text"></div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--/ Content types -->
+        </div>
+        <!-- / Content -->
+    </div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}References{% endblock %}
+
+{% block body %}
+<div class="content-wrapper">
+    <!-- Content -->
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <!-- Content types -->
+        <h5 class="pb-1 mb-4">Liste des references</h5>
+        <div class="row mb-5">
+            {% for ref in references %}
+                <div class="col-md-6 col-lg-4">
+                    <div class="card text-center mb-3">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ ref.titre }}</h5>
+                            <p class="card-text">{{ ref.description }}</p>
+                            <p class="card-text"><i class="bx bx-time"></i>date debut : {{ ref.datedebut | date('Y-m-d')}}</p>
+                            <p class="card-text"><i class="bx bx-time"></i>date fin : {{ ref.datedebut | date('Y-m-d')}}</p>
+                            <a href="{{ path('consultans_references' , {'id' : ref.id}) }}" class="btn btn-primary">Check Consultants</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

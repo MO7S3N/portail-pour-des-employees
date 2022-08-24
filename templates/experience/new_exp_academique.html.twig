@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Add experience academique{% endblock %}
+
+{% block body %}
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Add /</span> experience academique</h4>
+        <div class="row">
+            <div class="col-xl-12">
+                <!-- HTML5 Inputs -->
+                <div class="card mb-4">
+                    <h5 class="card-header">experience academique</h5>
+                    <div class="card-body">
+                        {{ form_start(form) }}
+                            <div class="mb-3 row">
+                                {{ form_row(form.datedebut) }}
+                            </div>
+                            <div class="mb-3 row">
+                                {{ form_row(form.datefin) }}
+                            </div>
+                            <div class="mb-3 row">
+                                {{ form_row(form.etablissement) }}
+                            </div>
+                            <div class="mb-3 row">
+                                <button type="submit" class="btn btn-primary d-grid w-100">Add</button>
+                            </div>
+                        {{ form_end(form) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

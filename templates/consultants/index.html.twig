@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consultants{% endblock %}
+
+{% block body %}
+    <div class="container-xxl flex-grow-1 container-p-y">
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="input-group custom-search-form">
+                    <input type="text" id="search" class="form-control" placeholder="Search by nom">
+                </div>
+            </div>
+            <div class="col-lg-4">
+                {{ form_start(form) }}
+                    {{ form_row(form.refernce)}}
+                    <br>
+                    <button type="submit" class="btn btn-primary d-grid w-100">rechercher</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+        <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Liste des /</span> Consultants</h4>
+        <!-- Content types -->
+        <div class="row mb-5" id="all">
+            {% include 'consultants/consultantsajax.html.twig' %}
+        </div>
+        <div class="row mb-5" id="search">
+        </div>
+    </div>
+    <script src="{{ asset('assets/js/jquery.js') }}"></script>
+    <script
+            src="{{ asset('https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js')}}">
+    </script>
+    <script>
+        $( document ).ready(function() {
+            var currentRequest = null;
+            $("#search").keyup(function(e){
+                /* La variable value va prendre la valeur insérer dans le champ de texte
+                afin d’effectuer la recherche */
+                var value = $(this).val();
+                if(currentRequest != null) {
+                    currentRequest.abort();
+                }
+                /* Ajax est lancé lors du remplissage du champ texte dont l’id est
+                « search » pour faire la recherche */
+                currentRequest = $.ajax({
+                    url : "{{ path('ajaxconsultant') }}",
+                    type : 'GET',
+                    data: {
+                        'searchValue' : value
+                    },
+                    success : function(retour)
+                    {
+                        $('#all').html(retour);
+                    },
+                });
+                return false;
+            });
+        });
+    </script>
+{% endblock %}
