@@ -43,7 +43,7 @@
                 /* Ajax est lancé lors du remplissage du champ texte dont l’id est
                 « search » pour faire la recherche */
                 currentRequest = $.ajax({
-                    url : "{{ path('ajaxconsultant') }}",
+                    url : "{{ path('ajaxconsultant')}}",
                     type : 'GET',
                     data: {
                         'searchValue' : value

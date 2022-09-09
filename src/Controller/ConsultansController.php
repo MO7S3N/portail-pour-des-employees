@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\DiplomesCertificats;
 use App\Entity\ExperienceAcademique;
 use App\Entity\ExperienceProfessionnel;
 use App\Entity\Reference;
@@ -11,6 +12,7 @@ use App\Form\AdminType;
 use App\Form\AssignReferenceType;
 use App\Form\ConsultantsType;
 use App\Form\SearchType;
+use App\Repository\DiplomesCertificatsRepository;
 use App\Repository\ExperienceAcademiqueRepository;
 use App\Repository\ExperienceProfessionnelRepository;
 use App\Repository\ReferenceRepository;
@@ -94,6 +96,19 @@ class ConsultansController extends AbstractController
             $admin->setPassword($passwordcrypt);
             $admin->setRoles('[ROLE_CONSULTANTS]');
             $admin->setEnabled(1);
+            //on recupere les images transmises
+            $images = $form->get('diplomes')->getData();
+            foreach ( $images as $image)
+            {
+                $fichier = md5(uniqid()). '.' . $image->guessExtension();
+                $image->move(
+                    $this->getParameter('image_directory') ,
+                    $fichier
+                );
+                $img  = new DiplomesCertificats();
+                $img->setName($fichier);
+                $admin->addDiplome($img);
+            }
             $em = $this->getDoctrine()->getManager();
             $em->persist($admin);
             $em->flush();
@@ -125,16 +140,18 @@ class ConsultansController extends AbstractController
     /**
      * @Route("/consultans/view_profile/{id}", name="view_profile")
      */
-    public function view_profile(Utilisateur $admin , ExperienceProfessionnelRepository $expro , ExperienceAcademiqueRepository $experienceAcademique , UtilisateurRepository $repository)
+    public function view_profile(Utilisateur $admin , ExperienceProfessionnelRepository $expro , ExperienceAcademiqueRepository $experienceAcademique , UtilisateurRepository $repository , DiplomesCertificatsRepository $certificatsRepository)
     {
         $expro = $expro->findBy(['utilisateur'=> $admin]);
         $expac = $experienceAcademique->findBy(['utilisateur'=> $admin]);
         $countref = $repository->countreferences($admin);
+        $certificats = $certificatsRepository->findBy(['utilisateur'=> $admin]);
         return $this->render('consultants/view_profile.html.twig', [
             "admin"=> $admin ,
             "expro" =>$expro ,
             "expac" =>$expac ,
-            "countref" => $countref
+            "countref" => $countref ,
+            "certificats" =>$certificats
 
         ]);
     }
@@ -142,16 +159,18 @@ class ConsultansController extends AbstractController
     /**
      * @Route("/consultans/view_profile_consultant/{id}", name="view_profile_consultant")
      */
-    public function _consultant(Utilisateur $admin , ExperienceProfessionnelRepository $expro , ExperienceAcademiqueRepository $experienceAcademique , UtilisateurRepository $repository)
+    public function view_profile_consultant(Utilisateur $admin , ExperienceProfessionnelRepository $expro , ExperienceAcademiqueRepository $experienceAcademique , UtilisateurRepository $repository ,  DiplomesCertificatsRepository $certificatsRepository)
     {
         $expro = $expro->findBy(['utilisateur'=> $admin]);
         $expac = $experienceAcademique->findBy(['utilisateur'=> $admin]);
         $countref = $repository->countreferences($admin);
+        $certificats = $certificatsRepository->findBy(['utilisateur'=> $admin]);
         return $this->render('consultants/view_profile_consultant.html.twig', [
             "admin"=> $admin ,
             "expro" =>$expro ,
             "expac" =>$expac ,
-            "countref" => $countref
+            "countref" => $countref ,
+            "certificats" =>$certificats
 
         ]);
     }

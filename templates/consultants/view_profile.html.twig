@@ -34,6 +34,8 @@
                     <br>
                     <a href="{{ path('download_consultants' , { 'id' : admin.id }) }}" class="btn btn-danger">Export cv</a>
                     <br>
+                    <a href="{{ path('download_reference' , { 'id' : admin.id }) }}" class="btn btn-primary">Export reference</a>
+                    <br>
                     <button class="btn btn-success" onclick="generate()">pdf</button>
                 </div>
             </div>
@@ -76,6 +78,25 @@
                 <div class="card mb-4">
                     <div class="card-body">
                         <div class="card-title">
+                            <h1 class='bx bx-briefcase-alt' style="font-size: 50px">Certificats</h1>
+                        </div>
+                        {% for cer in certificats  %}
+                            <div class="card-text">
+                                <div class="row mb-5">
+                                    <div class="col-lg-12">
+                                        <img src="{{ asset('assets/certificats/' ~ cer.name) }}" style="width: 350px" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="divider">
+                                <div class="divider-text"></div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <div class="card-title">
                             <h1 class='bx bx-briefcase-alt' style="font-size: 50px">At Ey Reference</h1>
                         </div>
                         {% for ref in admin.getReference  %}
@@ -84,6 +105,12 @@
                                     <div class="col-lg-8">
                                         <p class="card-text"><i class="bx bx-group"></i>titre : {{ ref.titre}}</p>
                                         <p class="card-text"><i class="bx bx-group"></i>description : {{ ref.description}}</p>
+                                        <p class="card-text"><i class="bx bx-world"></i>titre : {{ ref.pays}}</p>
+                                        <p class="card-text"><i class="bx bx-group"></i>titre : {{ ref.nomClient}}</p>
+                                        <p class="card-text"><i class="bx bx-group"></i>titre : {{ ref.contactClient}}</p>
+                                        <p class="card-text"><i class="bx bx-group"></i>titre : {{ ref.adresseClient}}</p>
+                                        <p class="card-text"><i class="bx bx-group"></i>titre : {{ ref.valeurMission}}</p>
+                                        <p class="card-text"><i class="bx bx-group"></i>titre : {{ ref.servicesRendus}}</p>
                                         <p class="card-text"><i class="bx bx-time"></i>date debut : {{ ref.datedebut | date('Y-m-d')}}</p>
                                         <p class="card-text"><i class="bx bx-time"></i>date fin :  {{ ref.datefin | date('Y-m-d')}}</p>
                                     </div>

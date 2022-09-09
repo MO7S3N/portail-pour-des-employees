@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Reference;
+use App\Entity\SearchReference;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -46,6 +47,39 @@ class ReferenceRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
+
+    public function findref(SearchReference $searchReference)
+    {
+        $query =  $this->createQueryBuilder('r');
+        if($searchReference->getReferncepays())
+        {
+            $query = $query->andWhere('r.pays = :val')
+                ->setParameter(':val', $searchReference->getReferncepays()->getPays());
+        }
+        if($searchReference->getReferencetitre())
+        {
+            $query = $query->andWhere('r.titre = :val1')
+                ->setParameter(':val1', $searchReference->getReferencetitre()->getTitre());
+        }
+        if($searchReference->getRefernceclient())
+        {
+            $query = $query->andWhere('r.nomClient = :val2')
+                ->setParameter(':val2', $searchReference->getRefernceclient()->getNomClient());
+        }
+        if($searchReference->getReferencedatedebut())
+        {
+            $query = $query->andWhere('r.datedebut > :min')
+                ->setParameter(':min', $searchReference->getReferencedatedebut());
+        }
+        if($searchReference->getReferencedatefin())
+        {
+            $query = $query->andWhere('r.datefin < :max')
+                ->setParameter(':max', $searchReference->getReferencedatefin());
+        }
+        return $query->getQuery()->getResult();
+    }
+
+
 
 
     // /**

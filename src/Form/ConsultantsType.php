@@ -61,6 +61,12 @@ class ConsultantsType extends AbstractType
                         'Japonnais'=>'Japonnais',
                     ]
             ])
+            ->add('diplomes', FileType::class , [
+                'label'=> " upload Certificat" ,
+                'multiple'=>true,
+                'mapped'=>false,
+                'required'=>false
+            ])
         ;
     }
 

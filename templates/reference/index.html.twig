@@ -8,13 +8,43 @@
     <div class="container-xxl flex-grow-1 container-p-y">
         <!-- Content types -->
         <h5 class="pb-1 mb-4">Liste des references</h5>
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-lg-2">
+                {{ form_row(form.referncepays) }}
+            </div>
+            <div class="col-lg-2">
+                {{ form_row(form.refernceclient) }}
+            </div>
+            <div class="col-lg-2">
+                {{ form_row(form.referencetitre) }}
+            </div>
+            <div class="col-lg-2">
+                {{ form_row(form.referencedatedebut) }}
+            </div>
+            <div class="col-lg-2">
+                {{ form_row(form.referencedatefin) }}
+            </div>
+            <div class="col-lg-2">
+                <label> </label>
+                <button type="submit" class="btn btn-primary d-grid w-100">rechercher</button>
+            </div>
+        </div>
+        {{ form_end(form) }}
+        <br>
         <div class="row mb-5">
             {% for ref in references %}
                 <div class="col-md-6 col-lg-4">
                     <div class="card text-center mb-3">
                         <div class="card-body">
-                            <h5 class="card-title">{{ ref.titre }}</h5>
-                            <p class="card-text">{{ ref.description }}</p>
+                            <h5 class="card-title">titre : {{ ref.titre }}</h5>
+                            <p class="card-text">description : {{ ref.description }}</p>
+                            <p class="card-text">pays : {{ ref.pays }}</p>
+                            <p class="card-text">nomClient : {{ ref.nomClient }}</p>
+                            <p class="card-text">adresseClient : {{ ref.adresseClient }}</p>
+                            <p class="card-text">contactClient : {{ ref.contactClient }}</p>
+                            <p class="card-text">valeurMission : {{ ref.valeurMission }}</p>
+                            <p class="card-text">servicesRendus : {{ ref.servicesRendus }}</p>
                             <p class="card-text"><i class="bx bx-time"></i>date debut : {{ ref.datedebut | date('Y-m-d')}}</p>
                             <p class="card-text"><i class="bx bx-time"></i>date fin : {{ ref.datedebut | date('Y-m-d')}}</p>
                             <a href="{{ path('consultans_references' , {'id' : ref.id}) }}" class="btn btn-primary">Check Consultants</a>

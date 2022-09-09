@@ -141,6 +141,12 @@ class Utilisateur implements UserInterface
      */
     private $reference;
 
+    /**
+     * @ORM\OneToMany(targetEntity=DiplomesCertificats::class, mappedBy="utilisateur" ,
+     * orphanRemoval = true , cascade = { "persist"})
+     */
+    private $diplomes;
+
 
 
     public function __construct()
@@ -148,6 +154,7 @@ class Utilisateur implements UserInterface
         $this->experienceacademiques = new ArrayCollection();
         $this->experiencesProfessionel = new ArrayCollection();
         $this->reference = new ArrayCollection();
+        $this->diplomes = new ArrayCollection();
 
     }
 
@@ -433,6 +440,36 @@ class Utilisateur implements UserInterface
     public function __toString(): string
     {
         return $this->username ?: '';
+    }
+
+    /**
+     * @return Collection<int, DiplomesCertificats>
+     */
+    public function getDiplomes(): Collection
+    {
+        return $this->diplomes;
+    }
+
+    public function addDiplome(DiplomesCertificats $diplome): self
+    {
+        if (!$this->diplomes->contains($diplome)) {
+            $this->diplomes[] = $diplome;
+            $diplome->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDiplome(DiplomesCertificats $diplome): self
+    {
+        if ($this->diplomes->removeElement($diplome)) {
+            // set the owning side to null (unless already changed)
+            if ($diplome->getUtilisateur() === $this) {
+                $diplome->setUtilisateur(null);
+            }
+        }
+
+        return $this;
     }
 
 

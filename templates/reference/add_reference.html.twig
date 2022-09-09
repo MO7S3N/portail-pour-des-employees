@@ -7,7 +7,7 @@
         <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Add /</span> Consultants</h4>
         {{ form_start(form) }}
         <div class="row">
-            <div class="col-xl-12">
+            <div class="col-xl-6">
                 <!-- HTML5 Inputs -->
                 <div class="card mb-4">
                     <div class="card-body">
@@ -18,14 +18,42 @@
                             {{ form_row(form.description) }}
                         </div>
                         <div class="mb-3 row">
-                            {{ form_row(form.datedebut) }}
+                            {{ form_row(form.pays) }}
                         </div>
                         <div class="mb-3 row">
-                            {{ form_row(form.datefin) }}
+                            {{ form_row(form.nomClient) }}
+                        </div>
+                        <div class="mb-3 row">
+                            {{ form_row(form.contactClient) }}
+                        </div>
+                        <div class="mb-3 row">
+                            {{ form_row(form.adresseClient) }}
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="col-xl-6">
+            <!-- HTML5 Inputs -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="mb-3 row">
+                        {{ form_row(form.valeurMission) }}
+                    </div>
+                    <div class="mb-3 row">
+                        {{ form_row(form.servicesRendus) }}
+                    </div>
+                    <div class="mb-3 row">
+                        {{ form_row(form.datedebut) }}
+                    </div>
+                    <div class="mb-3 row">
+                        {{ form_row(form.datefin) }}
+                    </div>
+                    <div class="mb-3 row">
+                        {{ form_row(form.utilisateur) }}
+                    </div>
+                </div>
+            </div>
+        </div>
             <div class="mb-3 row">
                 <button type="submit" class="btn btn-primary d-grid w-100">Add</button>
             </div>
